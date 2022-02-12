@@ -30,12 +30,16 @@ const registerRoutes = () => {
 
     app.post( "/race", ( req, res) => {
         const body = req.body;
-        const validBody = req.body && req.body.numberOfTasks && req.body.filledTasks;
+        const validBody = req.body && req.body.location && req.body.labels && req.body.price_point;
         //TODO actually check the body is the correct type.
         if (validBody) {
-            const { numberOfTasks, filledTasks } = body as CreateRacePayload
-            const result = createRace(numberOfTasks, filledTasks)
-            res.status(OK).json(result)
+            const { location, labels, price_point } = body as CreateRacePayload
+            try {
+                const result = createRace(location, price_point, labels)
+                res.status(OK).json(result)
+            } catch (e) {
+                res.status(BAD_REQUEST).json({'message':'invalid keyword'})
+            }
         } else {
         res.status(BAD_REQUEST).json({'message': 'invalid request body'}) 
         }
