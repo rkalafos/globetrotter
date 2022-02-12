@@ -1,6 +1,6 @@
 export interface Race {
 	id: string;
-	pointsOfInterest: POI[];
+    tasks: Task[];
 	players: Player[];
 }
 
@@ -45,8 +45,7 @@ export interface CreateRaceResponse {
 
 //BODY
 export interface JoinRacePayload {
-	sessionId: string;
-	player: Player[]
+	player: Player
 }
 
 // Effect -> Adds a player to the Race

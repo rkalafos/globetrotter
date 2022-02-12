@@ -2,14 +2,14 @@ import { Player, Race } from "./types";
 
 export const fetchRace = (raceId : string) : Race | undefined => {
     const dummyRace : Race = {
-        pointsOfInterest : [],
+        tasks : [],
         players : [],
         id : raceId
     }
     return dummyRace;
 }
 
-export const addPlayer = (raceId : string, player : Player) : boolean => {
+export const saveAddPlayer = (raceId : string, player : Player) : boolean => {
     console.log(`Unimplemented! should add ${player} to ${raceId}`)
     return true;
 }
