@@ -30,8 +30,10 @@ export const createRace = async (location :string, price_point: number, labels: 
         price_point: price_point,
         location: location
     }
+
+    const result = saveRace(race);
+    return result ? race.id : undefined;
     
-    return saveRace(race)
 }
 
 

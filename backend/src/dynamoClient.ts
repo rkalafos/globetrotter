@@ -2,32 +2,44 @@
 import { DynamoDB } from 'aws-sdk'
 import { Race } from "./types";
 
+const tableName = process.env.TABLE_NAME
+
 enum TABLES {
     RACE = "Race",
     TASK = "Task"
 }
 
-class GlobetrotDynamoClient {
+export class GlobetrotDynamoClient {
     private client : AWS.DynamoDB.DocumentClient
 
-    constructor (region : string) {
+    constructor () {
         // a client can be shared by different items.
         this.client =  new DynamoDB.DocumentClient()
     }
 
-    setItemGetTasks(taskIds : string[]) {
-
+    getRace(raceId : string) {
+        console.log(raceId)
+        const getRaceResult = this.get({'raceID': raceId})
+        return getRaceResult;
     }
 
-    setItemSaveRace(race : Race) {
+    async saveRace(race : Race) {
+        console.log(race);
+        const saveResult = await this.put(race)
+        return saveResult
     }
 
-    setItemAddPlayer(raceId : string, playerName : string) : string {
-        return "created playerId"
+    addPlayer(raceId : string, playerName : string) : boolean {
+        console.log(raceId, playerName);
+        const key = {"id": raceId};
+        const updateExpression = "set players = list_append(players, :new_player";
+        const expressionAttributeValues = {":new_player": [playerName]}
+        const addPlayerResult = this.update(key, updateExpression, expressionAttributeValues);
+        return true;
     }
 
-    async put(tableName : string, item: DynamoDB.DocumentClient.ItemCollectionKeyAttributeMap) : Promise<boolean> {
-        if (item) {
+    async put(item: DynamoDB.DocumentClient.ItemCollectionKeyAttributeMap) : Promise<boolean> {
+        if (item && tableName) {
             try {
                 await this.client.put({
                     TableName : tableName,
@@ -41,8 +53,27 @@ class GlobetrotDynamoClient {
         return false;
     }
 
-    async get<T>(tableName : string, key: DynamoDB.DocumentClient.Key) {
-        if (key) {
+    async update(key: DynamoDB.DocumentClient.Key, updateExpression : string, expressionAttributeValues : DynamoDB.DocumentClient.ExpressionAttributeValueMap) {
+        console.log(`${tableName} ${key} ${updateExpression} ${expressionAttributeValues}`)
+
+        const params = {TableName: tableName, 
+            Key: key, 
+            UpdateExpression: updateExpression, 
+            ExpressionAttributeValues: expressionAttributeValues, 
+            ReturnValues:"UPDATED_NEW"};
+
+        // this.client.update(params, function(err, data){
+        //     if (err) {
+        //         console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
+        //     } else {
+        //         console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
+        //     }
+        // })
+        return true;
+    }
+
+    async get<T>(key: DynamoDB.DocumentClient.Key) {
+        if (key && tableName) {
             const data = await this.client.get({
                 TableName : tableName,
                 Key: key

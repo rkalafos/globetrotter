@@ -1,24 +1,19 @@
 import { Player, Race } from "./types";
-import { examplePlayers, exampleTasks } from "./examples";
+import { GlobetrotDynamoClient } from "./dynamoClient";
 
 export const fetchRace = (raceId : string) : Race | undefined => {
-    const dummyRace : Race = {
-        tasks : exampleTasks,
-        players : Object.values(examplePlayers),
-        id : raceId
-    }
-    return dummyRace;
+       const client = new GlobetrotDynamoClient()
+       return client.getRace(raceId);
 }
 
-export const saveAddPlayer = (raceId : string, player : string) : number => {
+export const saveAddPlayer = (raceId : string, player : string) : boolean => {
     console.log(`Unimplemented! should add ${player} to ${raceId}`)
-    return 1;
+    const client = new GlobetrotDynamoClient();
+    return client.addPlayer(raceId, player);
 }
 
-export const saveRace = (player : Race) : string => {
-    console.log(`Unimplemented! should add ${player}`)
-    console.log(player);
-    const sessionId = '1234'
-    return sessionId;
+export const saveRace = (race : Race) : boolean => {
+    const client = new GlobetrotDynamoClient();
+    return  client.saveRace(race);
 }
 
