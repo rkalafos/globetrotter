@@ -1,6 +1,9 @@
 // ES6+ example
 import { DynamoDB } from 'aws-sdk'
 import { Race } from "./types";
+import { examplePlayers, exampleTasks } from './examples';
+
+const tableName = process.env.TABLE_NAME
 
 const tableName = process.env.TABLE_NAME
 
