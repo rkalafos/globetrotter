@@ -24,7 +24,7 @@ resources:
   Resources:
     RaceTable:
       Type: AWS::DynamoDB::Table
-        Properties:
+      Properties:
         TableName: Race
         AttributeDefinitions:
           - AttributeName: RaceID
@@ -34,7 +34,7 @@ resources:
             KeyType: HASH
     Taskable:
       Type: AWS::DynamoDB::Table
-        Properties:
+      Properties:
         TableName: Task
         AttributeDefinitions:
           - AttributeName: RaceID
