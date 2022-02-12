@@ -1,4 +1,35 @@
-import { POI, Task } from "./types";
+import { Player, POI, Task } from "./types";
+
+export const examplePlayers: Record<string, Player> = {
+    owen : {
+        id : 0,
+        name: 'owen'
+    },
+    raj : {
+        id : 1,
+        name: 'raj'
+    },
+    rachel : {
+        id : 2,
+        name:'rachel'
+    },
+    juan : {
+        id : 3,
+        name: 'juan'
+    },
+    guac : {
+        id : 4,
+        name: 'guac'
+    },
+    ockbert : {
+        id : 5,
+        name: 'ockeberto'
+    },
+    sky : {
+        id : 6,
+        name: 'sky'
+    },
+}
 
 const examplePOIs : Record<string, POI> = {
     commons : {

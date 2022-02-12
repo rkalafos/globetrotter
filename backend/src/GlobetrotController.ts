@@ -2,18 +2,18 @@ import { fetchRace, saveAddPlayer } from "./GlobetrotService"
 import { saveRace } from "./GlobetrotService";
 import { v4 as uuidv4 } from 'uuid';
 import { Player, Race, Task } from "./types";
-import { exampleTasks } from "./tasks";
+import { exampleTasks } from "./examples";
 
 export const getRace = (raceId : string) : Race | undefined => {
     return fetchRace(raceId);
 }
 
-export const createRace = (numTasks : number, initializedTasks : { task : Task, order : number }[]) => {
-    const tasks = Array(numTasks);
-    initializedTasks.forEach(task => {
-        tasks[task.order] = task.task;
+export const createRace = (numTasks : number, initializedTasks : Record<number, Task>) => {
+    const tasks : Task[] = Array(numTasks);
+    Object.entries(initializedTasks).forEach(([key, value]) => {
+        tasks[parseInt(key)] = value;
     })
-    const generatedTasks = exampleTasks.sort(() => 0.5 - Math.random()).slice(0, numTasks - initializedTasks.length);
+   const generatedTasks = exampleTasks.sort(() => 0.5 - Math.random()).slice(0, numTasks - Object.keys(initializedTasks).length);
 
     tasks.map(task => {
         if (!task && !!generatedTasks.length) {
@@ -32,6 +32,6 @@ export const createRace = (numTasks : number, initializedTasks : { task : Task, 
 }
 
 
-export const addPlayer = (player : Player, raceId : string) => {
+export const addPlayer = (player : string, raceId : string) => {
     return saveAddPlayer(raceId, player);
 }

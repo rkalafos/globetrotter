@@ -17,8 +17,8 @@ export interface POI {
 	picture?: File;
 }
 
-export interface Player {
-	id: string;
+export type Player = {
+	id: number;
 	name: string;
 }
 
@@ -33,7 +33,7 @@ export interface GetRaceResponse {
 // BODY
 export type CreateRacePayload = {
 	numberOfTasks: number;
-	filledTasks: { order : number, task : Task }[]
+	filledTasks: Record<number, Task>
 }
 
 // Effect -> Creates a session
@@ -45,7 +45,7 @@ export interface CreateRaceResponse {
 
 //BODY
 export interface JoinRacePayload {
-	player: Player
+	player: string
 }
 
 // Effect -> Adds a player to the Race
