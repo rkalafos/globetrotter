@@ -2,14 +2,10 @@ import { fetchRace, saveAddPlayer } from "./GlobetrotService"
 import { saveRace } from "./GlobetrotService";
 import { v4 as uuidv4 } from 'uuid';
 import { Player, Race, Task } from "./types";
+import { exampleTasks } from "./tasks";
 
 export const getRace = (raceId : string) : Race | undefined => {
     return fetchRace(raceId);
-}
-
-//TODO
-const generateTask = () => {
-    return undefined
 }
 
 export const createRace = (numTasks : number, initializedTasks : { task : Task, order : number }[]) => {
@@ -17,11 +13,13 @@ export const createRace = (numTasks : number, initializedTasks : { task : Task, 
     initializedTasks.forEach(task => {
         tasks[task.order] = task.task;
     })
+    const generatedTasks = exampleTasks.sort(() => 0.5 - Math.random()).slice(0, numTasks - initializedTasks.length);
+
     tasks.map(task => {
-        if (!task) {
-            return generateTask();
+        if (!task && !!generatedTasks.length) {
+            return  generatedTasks.splice(0, 1)[0];
         } else {
-            return task;
+            return undefined;
         }
     })
     const race : Race = {
