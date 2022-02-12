@@ -7,7 +7,17 @@ export interface Race {
 	players: Player[];
 }
 
-// Describes information stored about a player
+export type Coordinates = {
+	lat: number;
+	lng: number;
+} | string;
+
+export interface CreateRacePayload {
+	labels: string[];
+	location: Coordinates;
+	price_point: number;
+}
+
 export interface Player {
 	id: string;
 	name: string;
@@ -24,8 +34,8 @@ export interface POI {
 
 // A task in the Race
 export type Task = {
-	pointOfInterest : POI,
-	description : string,
+	pointOfInterest: POI,
+	description: string,
 }
 
 export interface JoinResponse {

@@ -15,7 +15,7 @@ export const Home = () => {
         <DefaultLayout>
             <Flex p={20}>
                 <VStack>
-                    <Heading textColor={'white'} >Want to Race?</Heading>
+                    <Heading textColor={'white'} >Wanna Race?</Heading>
                     <Stack direction={'row'} p={2}>
                         <Button
                             onClick={() => navigate('create')}
