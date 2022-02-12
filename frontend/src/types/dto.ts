@@ -23,3 +23,7 @@ export interface Task {
 	numberOfRatings: number;
 	image: string;
 }
+
+export interface JoinResponse {
+	raceId: string
+}

@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Player, Race } from '../types/dto';
+import {JoinResponse, Player, Race} from '../types/dto';
+import {JoinFormValues} from "../pages/Join";
 
 const apiUrl = process.env.NODE_ENV === 'production' ? 'https://api.todo.com' : 'http://localhost:8000';
 
@@ -11,7 +12,7 @@ export const globetrotterApi = createApi({
       getRace: builder.query<Race, string>({
           query: (id) => `/races/${id}`
       }),
-      joinRace: builder.mutation<undefined, Player>({
+      joinRace: builder.mutation<JoinResponse, JoinFormValues>({
           query: (player) => ({ 
               url: `/races`,
               method: 'PUT',
