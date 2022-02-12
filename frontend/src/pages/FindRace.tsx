@@ -31,7 +31,7 @@ export const FindRace = () => {
                         onSubmit={(values, formik: FormikHelpers<FormikValues>) => setRaceId(values.raceId)}
                     >
                         <Form>
-                            <Heading>Join a Race</Heading>
+                            <Heading>Find Your Race</Heading>
                             <FormLabel htmlFor='raceId'>
                                 Race ID
                                 <Input id='raceId' placeholder='XXXXXXXX' m={2}/>
