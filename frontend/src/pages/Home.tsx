@@ -2,6 +2,7 @@ import {
     Stack,
     Flex,
     Button,
+    Heading,
     VStack,
 } from '@chakra-ui/react';
 import {DefaultLayout} from "../layouts/DefaultLayout";
@@ -14,6 +15,7 @@ export const Home = () => {
         <DefaultLayout>
             <Flex p={20}>
                 <VStack>
+                    <Heading textColor={'white'} >Want to Race?</Heading>
                     <Stack direction={'row'} p={2}>
                         <Button
                             onClick={() => navigate('create')}
