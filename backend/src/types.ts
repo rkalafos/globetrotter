@@ -21,9 +21,9 @@ export interface CreateRacePayload{
 
 export interface POI {
 	name?: string;
-	vicinity: string;
-	formatted_address: string;
-	types: string[];
+	vicinity?: string;
+	formatted_address?: string;
+	types?: string[];
 	picture?: File;
 }
 
