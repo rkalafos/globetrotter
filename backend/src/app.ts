@@ -35,6 +35,7 @@ const registerRoutes = () => {
         if (validBody) {
             const { numberOfTasks, filledTasks } = body as CreateRacePayload
             const result = createRace(numberOfTasks, filledTasks)
+            res.status(OK).json(result)
         } else {
         res.status(BAD_REQUEST).json({'message': 'invalid request body'}) 
         }
@@ -49,18 +50,24 @@ const registerRoutes = () => {
             const { player } = body as JoinRacePayload
             const result = addPlayer(player, raceId);
             if (result) {
-                res.status(OK).json(result);
+                res.status(OK).json({
+                    'message' : `added player ${player} with id ${result} to race: ${raceId}`
+                });
             } else {
                 res.status(BAD_REQUEST).json({
                     'message' : `unable to add player to race with id ${raceId}`
                 })
             }
+        } else {
+            res.status(BAD_REQUEST).json({
+                'message': 'bad request body'
+            })
+
         }
     });
 }
 
 registerRoutes();
-console.log('REGISTERED')
 // start the Express server
 app.listen( port, () => {
     console.log( `server started at http://localhost:${ port }` );
