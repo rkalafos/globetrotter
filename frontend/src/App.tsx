@@ -3,6 +3,7 @@ import {
   ChakraProvider,
   theme,
 } from "@chakra-ui/react"
+import { ColorModeSwitcher } from "./ColorModeSwitcher"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { Home } from "./pages/Home"
 import { Create } from "./pages/Create"

@@ -1,4 +1,4 @@
-import {Box, Button, FormLabel, Heading, Input, Select} from '@chakra-ui/react';
+import {Box, Button, Divider, FormLabel, Heading, Input, Text} from '@chakra-ui/react';
 import {DefaultLayout} from "../layouts/DefaultLayout";
 import {Card} from "../components/Card";
 import {Formik, FormikValues, FormikHelpers, Form} from 'formik';
@@ -46,7 +46,7 @@ export const Join = () => {
                                     <Input id='raceId' placeholder='XXXXXXXX' m={2}/>
                                 </FormLabel>
                                 <Button
-                                    mt={4}
+                                    m={4}
                                     colorScheme='teal'
                                     type='submit'
                                     isLoading={result.isLoading}
@@ -55,6 +55,14 @@ export const Join = () => {
                                 </Button>
                             </Form>
                         </Formik>
+                        <Divider />
+                        <Button
+                            m={4}
+                            colorScheme='gray'
+                            onClick={() => {navigate('/find')}}
+                        >
+                            Already Part of an Adventure?
+                        </Button>
                     </Box>
                 </Card>
         </DefaultLayout>
