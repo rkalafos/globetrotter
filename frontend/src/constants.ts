@@ -1,4 +1,4 @@
-//contants file
+//constants file
 const constants = {
     MIN_POPULAR_RATING: 4.0
 }
