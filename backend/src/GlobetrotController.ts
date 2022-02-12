@@ -2,7 +2,6 @@ import { fetchRace, saveAddPlayer } from "./GlobetrotService"
 import { saveRace } from "./GlobetrotService";
 import { v4 as uuidv4 } from 'uuid';
 import { Player, Race, Task } from "./types";
-import { exampleTasks } from "./examples";
 import {generateTask} from "./googleApi";
 
 export const getRace = (raceId : string) : Race | undefined => {
