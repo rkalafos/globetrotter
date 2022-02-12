@@ -1,4 +1,5 @@
 import express from 'express';
+import 'dotenv/config';
 import { CreateRacePayload, JoinRacePayload } from './types';
 import { getRace, createRace, addPlayer } from './GlobetrotController';
 import { BAD_REQUEST, OK } from './StatusCode';
@@ -28,14 +29,14 @@ const registerRoutes = () => {
         res.send( "Hello world!" );
     });
 
-    app.post( "/race", ( req, res) => {
+    app.post( "/race", async ( req, res) => {
         const body = req.body;
         const validBody = req.body && req.body.location && req.body.labels && req.body.price_point;
         //TODO actually check the body is the correct type.
         if (validBody) {
             const { location, labels, price_point } = body as CreateRacePayload
             try {
-                const result = createRace(location, price_point, labels)
+                const result = await createRace(location, price_point, labels);
                 res.status(OK).json(result)
             } catch (e) {
                 res.status(BAD_REQUEST).json({'message':'invalid keyword'})
