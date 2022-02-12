@@ -1,81 +1,123 @@
-import { Box, Text, Image, Badge, VStack } from '@chakra-ui/react';
+import {Text, VStack, Stack, Heading, UnorderedList, ListItem} from '@chakra-ui/react';
 import { DefaultLayout } from "../layouts/DefaultLayout";
 import { Card } from "../components/Card";
 import { useEffect, useState } from "react";
-import constants from "../constants";
+import {TaskCard} from "../components/TaskCard";
+type Race = import('../types/dto').Race;
+
+const test_race: Race = {
+    id: "HACKBEANPOT-2022",
+    location: "Boston",
+    price_point: 2,
+    tasks: [
+        {
+            pointOfInterest: {
+                name: "Frog Pond",
+                vicinity: "Boston Common",
+            },
+            description: "Ice Skating at the Boston Common Frog Pond!"
+        },
+        {
+            pointOfInterest: {
+                name: "Paul Revere Statue",
+                vicinity: "The North End",
+            },
+            description: "Take a selfie with Paul Revere."
+        },
+        {
+            pointOfInterest: {
+                name: "Faneuil Hall",
+                vicinity: "boston",
+            },
+            description: "Visit the historic Faneuil Hall Marketplace."
+        },
+        {
+            pointOfInterest: {
+                name: "Boston Symphony Orchestra",
+                vicinity: "boston, huntington ave.",
+            },
+            description: "Enjoy the symphony with the world-famous BSO."
+        }
+    ],
+    players: [
+        {
+            id: "0",
+            name: "Britney Spears"
+        },
+        {
+            id: "1",
+            name: "Martha Stewart"
+        },
+        {
+            id: "2",
+            name: "Ye West"
+        },
+    ]
+}
+
 
 export const Race = () => {
-    type Race = import('../types/dto').Race;
+    // Set the race
     const [race, setRace] = useState<Race | undefined>();
-
+    // TODO: Query the actual race with the id from the url, and set the race to the object
     useEffect(() => {
-        const race: Race = {
-            id: "purpleDinosaur",
-            numberOfTasks: 2,
-            difficulty: 4,
-            pricePoint: 4, //0-5
-            dateCreated: '2022-02-12',
-            theme: "Popular",
-            location: "Boston", // address
-            tasks: [{
-                name: "The Harp",
-                types: ["bar", "restaurant"], // establishment, point_of_interest
-                price_point: 2, // 0-5
-                rating: 3.7, //
-                numberOfRatings: 145, // probably don't need
-                vicinity: "80 Rocks Road",
-                image: "/images/task-placeholder.png"
-            },
-            {
-                name: "Boda Borg",
-                types: ["Escape Room", "Activity"], // establishment, point_of_interest
-                price_point: 1, // 0-5
-                rating: 4.8, // 
-                numberOfRatings: 100, // probably don't need
-                vicinity: "75 Causeway Street",
-                image: "/images/task-placeholder.png"
-            }]
-        }
-        setRace(race)
+        setRace(test_race)
     }, []);
 
     const raceCards = () => {
-        return race && race.tasks && race.tasks.map(task => {
-            let priceString = ""
-            for (let i = 0; i < task.price_point; i++) {
-                priceString += "$";
-            }
-
-            return (
-                <Card minW='100%' maxW='lg' borderWidth='1px' borderRadius='lg' overflow='hidden'>
-                    <Image align='center' boxSize='200px' objectFit='cover' src={task.image} alt={task.name} />
-                    <Box pt='4'>
-                        <Box display='flex' alignItems='baseline'>
-                            <Box mt='1' fontWeight='semibold' as='h4' lineHeight='tight' isTruncated>
-                                {task.name}
-                            </Box>
-                            {task.rating >= constants.MIN_POPULAR_RATING &&
-                                <Badge borderRadius='full' px='2' colorScheme='purple' ml={task.rating >= constants.MIN_POPULAR_RATING ? '2' : '0'}>
-                                    Popular
-                                </Badge>
-                            }
-                            <Box color='gray.500' fontWeight='semibold' letterSpacing='wide' fontSize='xs' textTransform='uppercase' ml='2'>
-                                {task.types[0]} &bull; {priceString}
-                            </Box>
-                        </Box>
-                        <Box>
-                            <Text fontSize='sm'>{task.vicinity}</Text>
-                        </Box>
-                    </Box>
-                </Card >
-            );
-        });
+        return race?.tasks?.map(task => <TaskCard task={task}/>);
     };
+
+    const dashboard = () => {
+        return (
+            <Card w={'full'}>
+                <VStack w={'full'}>
+                    <Stack direction={'row'}>
+                        <Heading>
+                            Race ID: {race?.id}
+                        </Heading>
+                    </Stack>
+                    <Stack direction={'row'}>
+                        <Text>
+                            Location: {race?.location}
+                        </Text>
+                    </Stack>
+                    <Stack direction={'row'}>
+                        <Text>
+                            Price Point: {Array((race?.price_point ?? 0) + 1).fill('$').join('')}
+                        </Text>
+                    </Stack>
+                    <Stack direction={'row'}>
+                        <Text>
+                            Players:
+                        </Text>
+                    </Stack>
+                    <Stack direction={'row'}>
+                        <UnorderedList>
+                            {race?.players?.map(
+                                player => {
+                                    return <ListItem>{player.name}</ListItem>
+                                }
+                            )}
+                        </UnorderedList>
+                    </Stack>
+                </VStack>
+            </Card>
+        )
+    }
+
+    const noRaceFound = () => {
+        return (
+            <Heading>No race found!</Heading>
+        )
+    }
 
     return (
         <DefaultLayout>
             <VStack>
-                {raceCards()}
+                {race && dashboard()}
+                {race && raceCards()}
+                {!race && noRaceFound()}
             </VStack>
         </DefaultLayout>
     );
