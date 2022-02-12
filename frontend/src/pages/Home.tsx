@@ -6,51 +6,40 @@ import {
     VStack,
     useBreakpointValue,
 } from '@chakra-ui/react';
+import {DefaultLayout} from "../layouts/DefaultLayout";
+import React from "react";
+import {useNavigate} from "react-router-dom";
 
 export const Home = () => {
+    const navigate = useNavigate();
     return (
-        <Flex
-            w={'full'}
-            h={'100vh'}
-            backgroundImage={
-                'url(/images/background.jpg)'
-            }
-            backgroundSize={'cover'}
-            backgroundPosition={'center center'}>
-            <VStack
-                w={'full'}
-                justify={'center'}
-                px={useBreakpointValue({ base: 4, md: 8 })}
-                bgGradient={'linear(to-r, blackAlpha.600, transparent)'}>
-                <Stack maxW={'2xl'} align={'flex-start'} spacing={6}>
-                    <Text
-                        color={'white'}
-                        fontWeight={700}
-                        lineHeight={1.2}
-                        fontSize={useBreakpointValue({ base: '3xl', md: '4xl' })}>
-                        Globetrotter
-                    </Text>
-                    <Text color={'white'}>
-                        Explore a new world of travel and adventure.
-                    </Text>
-                    <Stack direction={'row'}>
+        <DefaultLayout>
+            <Flex p={20}>
+                <VStack>
+                    <Stack direction={'row'} p={2}>
                         <Button
-                            bg={'blue.400'}
+                            onClick={() => navigate('create')}
+                            bg={'teal.700'}
                             rounded={'full'}
                             color={'white'}
-                            _hover={{ bg: 'blue.500' }}>
-                            Show me more
-                        </Button>
-                        <Button
-                            bg={'whiteAlpha.300'}
-                            rounded={'full'}
-                            color={'white'}
-                            _hover={{ bg: 'whiteAlpha.500' }}>
-                            Show me more
+                            _hover={{ bg: 'teal.500' }}
+                        >
+                            Create an Adventure
                         </Button>
                     </Stack>
-                </Stack>
-            </VStack>
-        </Flex>
+                    <Stack direction={'row'} p={2}>
+                        <Button
+                            onClick={() => navigate('join')}
+                            bg={'teal.700'}
+                            rounded={'full'}
+                            color={'white'}
+                            _hover={{ bg: 'teal.500' }}
+                        >
+                            Join an Adventure
+                        </Button>
+                    </Stack>
+                </VStack>
+            </Flex>
+        </DefaultLayout>
     );
 }
