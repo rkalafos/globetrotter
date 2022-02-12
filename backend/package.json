@@ -1,0 +1,17 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "The backend for Globtrot",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Owen Loveluck",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13"
+  }
+}
