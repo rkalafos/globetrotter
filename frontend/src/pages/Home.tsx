@@ -36,6 +36,17 @@ export const Home = () => {
                             Join an Adventure
                         </Button>
                     </Stack>
+                    <Stack direction={'row'} p={2}>
+                        <Button
+                            onClick={() => navigate('find')}
+                            bg={'teal.700'}
+                            rounded={'full'}
+                            color={'white'}
+                            _hover={{ bg: 'teal.500' }}
+                        >
+                            Find Your Adventure
+                        </Button>
+                    </Stack>
                 </VStack>
             </Flex>
         </DefaultLayout>
