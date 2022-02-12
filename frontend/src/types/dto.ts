@@ -1,19 +1,27 @@
 export interface Race {
-    id: string;
-	pointsOfInterest: POI[];
-	players: Player[];
+	id: string;
+	difficulty: number;
+	pricePoint: number;
+	theme: string;
+	location: string;
+	numberOfTasks: number;
+	tasks: Task[];
+	dateCreated: string,
 }
 
 export interface Player {
-    id: string;
+	id: string;
 	name: string;
 }
 
-export interface POI {
-    name: string;
-	location: Location;
-	task?: string;
-	picture?: string; // TODO change to image url
+export interface Task {
+	name: string;
+	types: string[];
+	vicinity: string;
+	price_point: number;
+	rating: number;
+	numberOfRatings: number;
+	image: string;
 }
 
 export interface JoinResponse {
