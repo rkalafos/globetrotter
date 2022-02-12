@@ -5,6 +5,7 @@ import { BAD_REQUEST, OK } from './StatusCode';
 
 const app = express();
 const port = 8081; // default port to listen
+const serverless = require('serverless-http')
 app.use(express.json);
 
 const registerRoutes = () => {
@@ -65,3 +66,4 @@ app.listen( port, () => {
     console.log( `server started at http://localhost:${ port }` );
 });
     
+module.exports.handler = serverless(app);
