@@ -20,21 +20,14 @@ export class GlobetrotDynamoClient {
 
     getRace(raceId : string) {
         console.log(raceId)
-        const dummyRace : Race = {
-            players : Object.values(examplePlayers),
-            tasks : exampleTasks,
-            id : raceId
-        }
-        return dummyRace;
+        const getRaceResult = this.get({'raceID': raceId})
+        return getRaceResult;
     }
 
     async saveRace(race : Race) {
         console.log(race);
         const saveResult = await this.put(race)
-        if (saveResult) {
-            return true;
-        }
-        return false
+        return saveResult
     }
 
     addPlayer(raceId : string, playerName : string) : boolean {
