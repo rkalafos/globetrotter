@@ -33,7 +33,7 @@ resources:
           - AttributeName: RaceID
             KeyType: HASH
         ProvisionedThroughput:
-	        ReadCapacityUnits: 1
+          ReadCapacityUnits: 1
           WriteCapacityUnits: 1
     Taskable:
       Type: AWS::DynamoDB::Table
