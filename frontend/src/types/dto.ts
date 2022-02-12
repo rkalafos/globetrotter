@@ -1,27 +1,31 @@
+// All the information about an individual Race
 export interface Race {
 	id: string;
-	difficulty: number;
-	pricePoint: number;
-	theme: string;
 	location: string;
-	numberOfTasks: number;
+	price_point: number;
 	tasks: Task[];
-	dateCreated: string,
+	players: Player[];
 }
 
+// Describes information stored about a player
 export interface Player {
 	id: string;
 	name: string;
 }
 
-export interface Task {
-	name: string;
-	types: string[];
-	vicinity: string;
-	price_point: number;
-	rating: number;
-	numberOfRatings: number;
-	image: string;
+// Place of interest
+export interface POI {
+	name?: string;
+	vicinity?: string;
+	formatted_address?: string;
+	types?: string[];
+	picture?: File;
+}
+
+// A task in the Race
+export type Task = {
+	pointOfInterest : POI,
+	description : string,
 }
 
 export interface JoinResponse {
