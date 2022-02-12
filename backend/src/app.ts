@@ -34,8 +34,12 @@ const registerRoutes = () => {
         //TODO actually check the body is the correct type.
         if (validBody) {
             const { location, labels, price_point } = body as CreateRacePayload
-            const result = createRace(numberOfTasks, filledTasks)
-            res.status(OK).json(result)
+            try {
+                const result = createRace(location, price_point, labels)
+                res.status(OK).json(result)
+            } catch (e) {
+                res.status(BAD_REQUEST).json({'message':'invalid keyword'})
+            }
         } else {
         res.status(BAD_REQUEST).json({'message': 'invalid request body'}) 
         }

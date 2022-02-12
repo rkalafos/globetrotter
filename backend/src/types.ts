@@ -2,7 +2,7 @@ export interface Race {
 	id: string;
 	location: string;
 	price_point: number;
-    tasks: Task[];
+    tasks: (Task|undefined)[];
 	players: Player[];
 }
 
@@ -16,7 +16,7 @@ export type Task = {
 export interface CreateRacePayload{
     labels: string[],
 	location: string,
-	price_point: number
+	price_point: number,
 }
 
 export interface POI {
