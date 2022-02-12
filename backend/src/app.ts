@@ -6,13 +6,13 @@ import { BAD_REQUEST, OK } from './StatusCode';
 const app = express();
 const port = 8081; // default port to listen
 const serverless = require('serverless-http')
-app.use(express.json);
+app.use(express.json());
 
 const registerRoutes = () => {
     // define a route handler for the default home page
     app.get( "/", ( req, res ) => {
         console.log(req)
-        res.status(OK).json({'message': 'hello globetrotter!'})
+        res.status(OK).json({'message': 'hello globetrotter!'});
     });
 
     // declare a type 
