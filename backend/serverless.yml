@@ -6,6 +6,10 @@ provider:
   name: aws
   region: us-east-1
   runtime: nodejs14.x
+  environment:
+    TABLE_NAME:
+      Ref: Race
+
 
 functions:
   app:
@@ -26,19 +30,6 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: Race
-        AttributeDefinitions:
-          - AttributeName: RaceID
-            AttributeType: S
-        KeySchema:
-          - AttributeName: RaceID
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-    Taskable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: Task
         AttributeDefinitions:
           - AttributeName: RaceID
             AttributeType: S
