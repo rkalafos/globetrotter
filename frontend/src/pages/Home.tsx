@@ -2,9 +2,7 @@ import {
     Stack,
     Flex,
     Button,
-    Text,
     VStack,
-    useBreakpointValue,
 } from '@chakra-ui/react';
 import {DefaultLayout} from "../layouts/DefaultLayout";
 import React from "react";
