@@ -6,6 +6,10 @@ provider:
   name: aws
   region: us-east-1
   runtime: nodejs14.x
+  environment:
+    TABLE_NAME:
+      Ref: Race
+
 
 functions:
   app:
