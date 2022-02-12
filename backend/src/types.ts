@@ -1,5 +1,7 @@
 export interface Race {
 	id: string;
+	location: string;
+	price_point: number;
     tasks: Task[];
 	players: Player[];
 }
@@ -11,9 +13,17 @@ export type Task = {
     description : string,
 }
 
+export interface CreateRacePayload{
+    labels: string[],
+	location: string,
+	price_point: number
+}
+
 export interface POI {
-	name: string;
-	location: Location;
+	name?: string;
+	vicinity: string;
+	formatted_address: string;
+	types: string[];
 	picture?: File;
 }
 
@@ -30,11 +40,6 @@ export interface GetRaceResponse {
     tasks : Task[]
 }
 
-// BODY
-export type CreateRacePayload = {
-	numberOfTasks: number;
-	filledTasks: Record<number, Task>
-}
 
 // Effect -> Creates a session
 
