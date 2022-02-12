@@ -5,9 +5,6 @@ jobs:
   deploy_zip:
     name: deploy lambda function
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x]
     steps:
       - name: checkout source code
         uses: actions/checkout@v2
