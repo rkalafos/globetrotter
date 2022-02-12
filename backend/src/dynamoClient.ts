@@ -1,29 +1,39 @@
 // ES6+ example
 import { DynamoDB } from 'aws-sdk'
 import { Race } from "./types";
+import { examplePlayers, exampleTasks } from './examples';
 
 enum TABLES {
     RACE = "Race",
     TASK = "Task"
 }
 
-class GlobetrotDynamoClient {
+export class GlobetrotDynamoClient {
     private client : AWS.DynamoDB.DocumentClient
 
-    constructor (region : string) {
+    constructor () {
         // a client can be shared by different items.
         this.client =  new DynamoDB.DocumentClient()
     }
 
-    setItemGetTasks(taskIds : string[]) {
-
+    getRace(raceId : string) {
+        console.log(raceId)
+        const dummyRace : Race = {
+            players : Object.values(examplePlayers),
+            tasks : exampleTasks,
+            id : raceId
+        }
+        return dummyRace;
     }
 
-    setItemSaveRace(race : Race) {
+    saveRace(race : Race) {
+        console.log(race);
+        return true;
     }
 
-    setItemAddPlayer(raceId : string, playerName : string) : string {
-        return "created playerId"
+    addPlayer(raceId : string, playerName : string) : boolean {
+        console.log(raceId, playerName);
+        return true;
     }
 
     async put(tableName : string, item: DynamoDB.DocumentClient.ItemCollectionKeyAttributeMap) : Promise<boolean> {
@@ -39,6 +49,11 @@ class GlobetrotDynamoClient {
             }
         }
         return false;
+    }
+
+    async update(tableName : string, key: DynamoDB.DocumentClient.Key, updateExpression : string, expressionAttributeValues : DynamoDB.ExpressionAttributeValueMap) {
+        console.log(`${tableName} ${key} ${updateExpression} ${expressionAttributeValues}`)
+        return true;
     }
 
     async get<T>(tableName : string, key: DynamoDB.DocumentClient.Key) {

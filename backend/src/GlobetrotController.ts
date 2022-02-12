@@ -27,8 +27,10 @@ export const createRace = (numTasks : number, initializedTasks : Record<number, 
         tasks : tasks,
         players : []
     }
+
+    const result = saveRace(race);
+    return result ? race.id : undefined;
     
-    return saveRace(race)
 }
 
 
