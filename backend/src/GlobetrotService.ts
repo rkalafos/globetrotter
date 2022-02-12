@@ -1,21 +1,20 @@
 import { Player, Race } from "./types";
-import { examplePlayers, exampleTasks } from "./examples";
 import { GlobetrotDynamoClient } from "./dynamoClient";
 import { TransactWriteItemsOutput } from "@aws-sdk/client-dynamodb";
 
-export const fetchRace = (raceId : string) : Race | undefined => {
+export const fetchRace = async (raceId : string) : Promise<Race | undefined> => {
        const client = new GlobetrotDynamoClient()
-       return client.getRace(raceId);
+       return await client.getRace(raceId);
 }
 
-export const saveAddPlayer = (raceId : string, player : string) : boolean => {
+export const saveAddPlayer = async (raceId : string, player : string) : Promise<boolean> => {
     console.log(`Unimplemented! should add ${player} to ${raceId}`)
     const client = new GlobetrotDynamoClient();
-    return client.addPlayer(raceId, player);
+    return await client.addPlayer(raceId, player);
 }
 
-export const saveRace = (race : Race) : boolean => {
+export const saveRace = async (race : Race) : Promise<boolean> => {
     const client = new GlobetrotDynamoClient();
-    return  client.saveRace(race);
+    return await client.saveRace(race);
 }
 

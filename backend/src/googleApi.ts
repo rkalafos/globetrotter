@@ -53,9 +53,9 @@ export async function generateTask(keyword: string, price_level: number, address
             radius: 20000,
             key: api_key
         }
-    })
-    let tasks: Task[] = myPlaces.data.results.filter(r=>(!!r.vicinity && !!r.name && !!r.rating && !!r.vicinity && !!r.formatted_address)).map(r=> {
-        return {
+    });
+    let tasks: Task[] = myPlaces.data.results.filter(r=>(!!r.name && !!r.rating)).map(r=> {
+        return {            
             description: "",
             pointOfInterest: {
                 name: r.name,
