@@ -15,3 +15,7 @@ export interface POI {
 	task?: string;
 	picture?: string; // TODO change to image url
 }
+
+export interface JoinResponse {
+	raceId: string
+}

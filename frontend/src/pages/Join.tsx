@@ -1,19 +1,62 @@
-import {Box, Text, useColorModeValue} from '@chakra-ui/react';
+import {Box, Button, FormLabel, Heading, Input, Select} from '@chakra-ui/react';
 import {DefaultLayout} from "../layouts/DefaultLayout";
 import {Card} from "../components/Card";
+import {Formik, FormikValues, FormikHelpers, Form} from 'formik';
+import {useJoinRaceMutation} from "../services/api";
+import {useEffect} from "react";
+import {useNavigate} from "react-router-dom";
 
-function JoinRace(racerName: string, raceCode: string) {
-
+export interface JoinFormValues {
+    playerName: string;
+    raceId: string;
 }
 
+
 export const Join = () => {
+    const navigate = useNavigate();
+    const initialValues: JoinFormValues = {playerName: '', raceId: ''};
+    const [joinRequest, result]  = useJoinRaceMutation();
+    // Everytime result is changed, this code is run.
+    useEffect(() => {
+        if (result && result.isSuccess) {
+            // Navigate to the race we created
+            navigate('/race/' + result.data.raceId)
+        }
+        if (result && result.isError) {
+            // TODO: Let the user know that their request errored
+        }
+    }, [result])
     return (
         <DefaultLayout>
                 <Card>
-                    <Box m={8} p={8} textAlign={'center'}>
-                        <Text>To join an existing race, enter the mission code.</Text>
+                    <Box m={2} p={2} textAlign={'center'}>
+                        <Formik
+                            initialValues={initialValues}
+                            onSubmit={(values, formik: FormikHelpers<FormikValues>) => joinRequest(values as JoinFormValues)}
+                        >
+                            <Form>
+                                <Heading>Join a Race</Heading>
+                                <FormLabel htmlFor='playerName' m={2}>
+                                    Name
+                                    <Input id='playerName' placeholder='Please enter your name.' />
+                                </FormLabel>
+
+                                <FormLabel htmlFor='raceId'>
+                                    Race ID
+                                    <Input id='raceId' placeholder='XXXXXXXX' m={2}/>
+                                </FormLabel>
+                                <Button
+                                    mt={4}
+                                    colorScheme='teal'
+                                    type='submit'
+                                    isLoading={result.isLoading}
+                                >
+                                    Submit
+                                </Button>
+                            </Form>
+                        </Formik>
                     </Box>
                 </Card>
         </DefaultLayout>
     );
-}
+};
