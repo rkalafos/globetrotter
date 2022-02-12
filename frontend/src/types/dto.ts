@@ -9,6 +9,17 @@ export interface Race {
 	dateCreated: string,
 }
 
+export type Coordinates = {
+	lat: number;
+	lng: number;
+} | string;
+
+export interface CreateRacePayload {
+	labels: string[];
+	location: Coordinates;
+	price_point: number;
+}
+
 export interface Player {
 	id: string;
 	name: string;

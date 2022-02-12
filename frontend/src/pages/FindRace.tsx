@@ -1,7 +1,7 @@
 import {useNavigate} from "react-router-dom";
 import {DefaultLayout} from "../layouts/DefaultLayout";
 import {Card} from "../components/Card";
-import {Heading, Input, FormLabel, Button, Box} from "@chakra-ui/react";
+import {Heading, Input, FormLabel, Button, Box, HStack} from "@chakra-ui/react";
 import {Form, Formik, FormikHelpers, FormikValues} from "formik";
 import {useGetRaceQuery, useJoinRaceMutation} from "../services/api";
 import {useEffect, useState} from "react";
@@ -36,14 +36,22 @@ export const FindRace = () => {
                                 Race ID
                                 <Input id='raceId' placeholder='XXXXXXXX' m={2}/>
                             </FormLabel>
-                            <Button
-                                mt={4}
-                                colorScheme='teal'
-                                type='submit'
-                                isLoading={isLoading}
-                            >
-                                Submit
-                            </Button>
+                            <HStack>
+                                <Button
+                                    variant='outline'
+                                    onClick={() => navigate('/')}
+                                >
+                                    Need to create a race?
+                                </Button>
+                                <Button
+                                    mt={4}
+                                    colorScheme='teal'
+                                    type='submit'
+                                    isLoading={isLoading}
+                                >
+                                    Submit
+                                </Button>
+                            </HStack>
                         </Form>
                     </Formik>
                 </Box>
