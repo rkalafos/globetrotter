@@ -37,7 +37,6 @@ export const DefaultLayout: React.FC = ({ children }) => {
                 >
                     Globetrotter.
                 </Heading>
-
             </Box>
             <Stack as={Center} direction={'row'} w={'100%'}>
                 {children}

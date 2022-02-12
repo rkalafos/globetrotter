@@ -4,31 +4,28 @@ import {
     VStack,
 } from '@chakra-ui/react';
 import {DefaultLayout} from "../layouts/DefaultLayout";
+import {Card} from "../components/Card";
 
 export const Create = () => {
     return (
         <DefaultLayout>
-            <VStack>
-                <Stack direction={'row'}>
-                    <Select placeholder={"Select city..."} bgColor={'white'} isRequired={true}>
-                        <option value={"boston"}>Boston</option>
-                    </Select>
-                </Stack>
-                <Stack direction={'row'}>
-                    <RangeSlider aria-label={['min', 'max']} defaultValue={[1, 5]}>
-                        <RangeSliderTrack>
-                            <RangeSliderFilledTrack />
-                        </RangeSliderTrack>
-                        <RangeSliderThumb index={0} />
-                        <RangeSliderThumb index={1} />
-                    </RangeSlider>
+            <Card>
+                <VStack w={'full'}>
+                    <Stack w={'full'}>
+                        <Select placeholder={"Select a city..."}>
+                            <option>Boston</option>
+                            <option>London</option>
+                            <option>Paris</option>
+                        </Select>
+                    </Stack>
+                    <Stack>
 
-                </Stack>
-                <Stack direction={'row'}>
+                    </Stack>
+                    <Stack>
 
-                </Stack>
-            </VStack>
-
+                    </Stack>
+                </VStack>
+            </Card>
         </DefaultLayout>
     );
 }
