@@ -83,9 +83,9 @@ export const Race = () => {
     const [copiedAlertVisible, setCopiedAlertVisible] = useState(false)
     // TODO: Query the actual race with the id from the url, and set the race to the object
     useEffect(() => {
-        //if (!race && data) {
-        setRace(test_race);
-        //}
+        if (!race && data) {
+            setRace(data);
+        }
     }, [data]);
 
     const raceCards = () => {
@@ -126,7 +126,7 @@ export const Race = () => {
 
     const dashboard = () => {
         const copyLink = () => {
-            const link = constants.SITE_DOMAIN + '/race' + race?.id
+            const link = constants.SITE_DOMAIN + '/race/' + race?.id
             navigator.clipboard.writeText(link)
 
             setCopiedAlertVisible(true)
