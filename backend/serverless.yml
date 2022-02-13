@@ -7,6 +7,7 @@ provider:
   region: us-east-1
   runtime: nodejs14.x
   environment:
+    GOOGLE_MAPS_API_KEY: ${ssm:google_api_key}
     TABLE_NAME:
       Ref: RaceTable
 
