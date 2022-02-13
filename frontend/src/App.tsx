@@ -3,7 +3,6 @@ import {
   ChakraProvider,
   theme,
 } from "@chakra-ui/react"
-import { ColorModeSwitcher } from "./ColorModeSwitcher"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { Home } from "./pages/Home"
 import { Create } from "./pages/Create"
@@ -12,7 +11,6 @@ import { Join } from "./pages/Join";
 import { Race } from "./pages/Race"
 import { Provider } from "react-redux";
 import { store } from "./services/store";
-import {FindRace} from "./pages/FindRace";
 
 export const App = () => (
   <Provider store={store}>
@@ -22,7 +20,6 @@ export const App = () => (
           <Route path="/" element={<Home />} />
           <Route path="create" element={<Create />} />
           <Route path="join" element={<Join />} />
-          <Route path="find" element={<FindRace />} />
           <Route path="race/:id" element={<Race />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

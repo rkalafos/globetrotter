@@ -1,4 +1,4 @@
-import {Box, Center, Heading, Stack, VStack} from "@chakra-ui/react";
+import { Box, Center, Heading, Stack, VStack } from "@chakra-ui/react";
 import React from "react";
 import { NavBar } from "../components/NavBar";
 
@@ -13,6 +13,9 @@ export const DefaultLayout: React.FC = ({ children }) => {
             }
             backgroundSize={"cover"}
             backgroundPosition={"center center"}
+            position={"fixed"}
+            overflowY={"scroll"}
+            pb={'1$'}
         >
             <NavBar />
             <Stack as={Center} direction={'row'} w={'100%'}>

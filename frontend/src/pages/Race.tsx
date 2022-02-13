@@ -1,8 +1,9 @@
-import {Text, VStack, Stack, Heading, UnorderedList, ListItem} from '@chakra-ui/react';
+import { Text, VStack, Stack, Heading, Flex, Grid, GridItem, Center } from '@chakra-ui/react';
 import { DefaultLayout } from "../layouts/DefaultLayout";
 import { Card } from "../components/Card";
 import { useEffect, useState } from "react";
-import {TaskCard} from "../components/TaskCard";
+import { TaskCard } from "../components/TaskCard";
+import { FaUser } from 'react-icons/fa';
 type Race = import('../types/dto').Race;
 
 const test_race: Race = {
@@ -65,43 +66,43 @@ export const Race = () => {
     }, []);
 
     const raceCards = () => {
-        return race?.tasks?.map(task => <TaskCard task={task}/>);
+        return race?.tasks?.map(task => <TaskCard task={task} />);
     };
+
+    const peopleGridItems = () => {
+        return race?.players?.map(player => <GridItem w='100%' h='10' ><Flex><FaUser />{player.name}</Flex></GridItem>)
+    }
 
     const dashboard = () => {
         return (
             <Card w={'full'}>
-                <VStack w={'full'}>
-                    <Stack direction={'row'}>
-                        <Heading>
-                            Race ID: {race?.id}
-                        </Heading>
-                    </Stack>
-                    <Stack direction={'row'}>
-                        <Text>
-                            Location: {race?.location}
-                        </Text>
-                    </Stack>
-                    <Stack direction={'row'}>
-                        <Text>
-                            Price Point: {Array((race?.price_point ?? 0) + 1).fill('$').join('')}
-                        </Text>
-                    </Stack>
-                    <Stack direction={'row'}>
-                        <Text>
-                            Players:
-                        </Text>
-                    </Stack>
-                    <Stack direction={'row'}>
-                        <UnorderedList>
-                            {race?.players?.map(
-                                player => {
-                                    return <ListItem>{player.name}</ListItem>
-                                }
-                            )}
-                        </UnorderedList>
-                    </Stack>
-                </VStack>
+                <Grid templateRows='repeat(2, 1fr)' gap={5}>
+                    <GridItem>
+                        <VStack w={'full'}>
+                            <Stack direction={'row'}>
+                                <Heading>
+                                    {race?.id}
+                                </Heading>
+                            </Stack>
+                            <Stack direction={'row'}>
+                                <Text>
+                                    <b>Location: </b> {race?.location}
+                                </Text>
+                            </Stack>
+                            <Stack direction={'row'}>
+                                <Text>
+                                    <b>Price Point: </b> {Array((race?.price_point ?? 0) + 1).fill('$').join('')}
+                                </Text>
+                            </Stack>
+                        </VStack>
+                    </GridItem>
+                    <GridItem>
+                        <Grid templateColumns='repeat(5, 1fr)' gap={6}>
+                            {peopleGridItems()}
+                        </Grid>
+                    </GridItem>
+                </Grid>
+
             </Card>
         )
     }
@@ -114,8 +115,9 @@ export const Race = () => {
 
     return (
         <DefaultLayout>
-            <VStack>
+            <VStack pl={'30px'} pr={'30px'} pb={'30px'}>
                 {race && dashboard()}
+                <Heading color={"white"}>YOUR RACE TASKS</Heading>
                 {race && raceCards()}
                 {!race && noRaceFound()}
             </VStack>
