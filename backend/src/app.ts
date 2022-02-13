@@ -19,16 +19,15 @@ const registerRoutes = () => {
     });
 
     // declare a type 
-    app.get( "/race/:raceId", ( req, res ) => {
+    app.get( "/race/:raceId", async ( req, res ) => {
         const raceId = req.params.raceId;
-        const race = getRace(raceId);
+        const race = await getRace(raceId);
         if (race) {
+            console.log(race)
             res.status(OK).json(race)
         } else {
             res.status(BAD_REQUEST).json({'message': `unable to find race with id ${raceId}`})
         }
-
-        res.send( "Hello world!" );
     });
 
     app.post( "/race", async ( req, res) => {
@@ -49,28 +48,30 @@ const registerRoutes = () => {
     })
 
     app.put( "/race/:raceId", ( req, res) => {
-        const body = req.body;
-        const validBody = body && body.player
-        const raceId = req.params.raceId
+        // const body = req.body;
+        // const validBody = body && body.player
+        // const raceId = req.params.raceId
+        const reqst = req;
+        res.status(OK);
         //TODO actually check the body is the correct type.
-        if (validBody && raceId) {
-            const { player } = body as JoinRacePayload
-            const result = addPlayer(player, raceId);
-            if (result) {
-                res.status(OK).json({
-                    'message' : `added player ${player} with id ${result} to race: ${raceId}`
-                });
-            } else {
-                res.status(BAD_REQUEST).json({
-                    'message' : `unable to add player to race with id ${raceId}`
-                })
-            }
-        } else {
-            res.status(BAD_REQUEST).json({
-                'message': 'bad request body'
-            })
+        // if (validBody && raceId) {
+        //     const { player } = body as JoinRacePayload
+        //     const result = addPlayer(player, raceId);
+        //     if (result) {
+        //         res.status(OK).json({
+        //             'message' : `added player ${player} with id ${result} to race: ${raceId}`
+        //         });
+        //     } else {
+        //         res.status(BAD_REQUEST).json({
+        //             'message' : `unable to add player to race with id ${raceId}`
+        //         })
+        //     }
+        // } else {
+        //     res.status(BAD_REQUEST).json({
+        //         'message': 'bad request body'
+        //     })
 
-        }
+        // }
     });
 }
 
