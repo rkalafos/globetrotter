@@ -31,7 +31,7 @@ export const TaskCard: React.FC<taskCardProps> = (props) => {
                         </Box>
                         <Box color='gray.500' fontWeight='semibold' letterSpacing='wide' fontSize='xs'
                             textTransform='uppercase'>
-                            {props.task.pointOfInterest.types ? [0] : 'Unknown type'}
+                            {props.task.pointOfInterest.types ? props.task.pointOfInterest.types[0].replaceAll('_', ' ') : 'Unknown type'}
                         </Box>
                         <Box>
                             <Text fontSize='sm'>{props.task.pointOfInterest.vicinity}</Text>
