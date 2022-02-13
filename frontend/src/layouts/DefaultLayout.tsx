@@ -14,7 +14,7 @@ export const DefaultLayout: React.FC = ({ children }) => {
             backgroundSize={"cover"}
             backgroundPosition={"center center"}
             position={"fixed"}
-            overflowY={"scroll"}
+            overflowY={"auto"}
             pb={'1$'}
         >
             <NavBar />

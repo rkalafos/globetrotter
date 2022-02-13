@@ -22,14 +22,15 @@ export async function getGeocode(address: string) : Promise<LatLngLiteral>{
     }
 }
 
-async function getPlaces(keyword: string, price_level: number, address:string) :Promise<Task[]>{
-    const myGeocode = await getGeocode(address)
+async function getPlaces(keyword: string, price_level: number|undefined, address:string) :Promise<Task[]>{
+    const myGeocode = await getGeocode(address);
+    let place = price_level;
     let myPlaces = await client.textSearch({
         params:{
             location: {latitude: myGeocode['lat'], longitude:myGeocode['lng']},
             query: keyword,
-            maxprice: price_level,
-            minprice: 0,
+            maxprice: price_level || undefined,
+            minprice: price_level ? 0 : undefined,
             radius: 40000,
             key: api_key
         }
@@ -67,11 +68,11 @@ export async function generateTask(keyword: string, price_level: number, address
         return tasks[Math.floor(Math.random() * tasks.length)];
     } else {
         console.log("No tasks trying with full price range")
-        tasks = await getPlaces(tmpKeyword, 4, address);
+        tasks = await getPlaces(tmpKeyword, undefined, address);
         if (tasks.length) {
             return tasks[Math.floor(Math.random() * tasks.length)];
         } else {
-            tasks = await getPlaces('activity', 4, address);
+            tasks = await getPlaces('activity', undefined, address);
             if (tasks.length) {
                 return tasks[Math.floor(Math.random() * tasks.length)];
             } else {
