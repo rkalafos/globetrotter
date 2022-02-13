@@ -53,6 +53,18 @@ const test_race: Race = {
             id: "2",
             name: "Ye West"
         },
+        {
+            id: "0",
+            name: "Britney Spears"
+        },
+        {
+            id: "1",
+            name: "Martha Stewart"
+        },
+        {
+            id: "2",
+            name: "Ye West"
+        },
     ]
 }
 
@@ -70,39 +82,39 @@ export const Race = () => {
     };
 
     const peopleGridItems = () => {
-        return race?.players?.map(player => <GridItem w='100%' h='10' ><Flex><FaUser />{player.name}</Flex></GridItem>)
+        return race?.players?.map(player => <GridItem h='10' ><Flex><FaUser style={{
+            marginTop: '5px',
+            marginRight: '5px',
+        }} />{player.name}</Flex></GridItem>)
     }
 
     const dashboard = () => {
         return (
             <Card w={'full'}>
-                <Grid templateRows='repeat(2, 1fr)' gap={5}>
-                    <GridItem>
-                        <VStack w={'full'}>
-                            <Stack direction={'row'}>
-                                <Heading>
-                                    {race?.id}
-                                </Heading>
-                            </Stack>
-                            <Stack direction={'row'}>
-                                <Text>
-                                    <b>Location: </b> {race?.location}
-                                </Text>
-                            </Stack>
-                            <Stack direction={'row'}>
-                                <Text>
-                                    <b>Price Point: </b> {Array((race?.price_point ?? 0) + 1).fill('$').join('')}
-                                </Text>
-                            </Stack>
+                <VStack w={'full'}>
+                    <Stack direction={'row'}>
+                        <Heading>
+                            {race?.id}
+                        </Heading>
+                    </Stack>
+                    <Stack direction={'row'}>
+                        <Text>
+                            <b>Location: </b>{race?.location}
+                        </Text>
+                    </Stack>
+                    <Stack direction={'row'}>
+                        <Text>
+                            <b>Price Point: </b>{Array((race?.price_point ?? 0) + 1).fill('$').join('')}
+                        </Text>
+                    </Stack>
+                    <Stack direction={'row'} pt='20px'>
+                        <VStack>
+                            <Grid templateColumns='repeat(3, 1fr)' gap={6}>
+                                {peopleGridItems()}
+                            </Grid>
                         </VStack>
-                    </GridItem>
-                    <GridItem>
-                        <Grid templateColumns='repeat(5, 1fr)' gap={6}>
-                            {peopleGridItems()}
-                        </Grid>
-                    </GridItem>
-                </Grid>
-
+                    </Stack>
+                </VStack>
             </Card>
         )
     }
