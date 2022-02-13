@@ -39,7 +39,7 @@ export const FindRace = () => {
                             <HStack>
                                 <Button
                                     variant='outline'
-                                    onClick={() => navigate('/')}
+                                    onClick={() => navigate('/create')}
                                 >
                                     Need to create a race?
                                 </Button>

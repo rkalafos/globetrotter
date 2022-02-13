@@ -48,7 +48,10 @@ export const Join = () => {
                 <Box m={2} p={2} textAlign={'center'}>
                     <Formik
                         initialValues={initialValues}
-                        onSubmit={(values, formik: FormikHelpers<FormikValues>) => joinRequest(values as JoinFormValues)}
+                        onSubmit={(values) => {
+                            //joinRequest(values as JoinFormValues)
+                            navigate(`/race/${values.raceId}`);
+                        }}
                     >
                         <Form>
                             <Heading>Join a Race</Heading>

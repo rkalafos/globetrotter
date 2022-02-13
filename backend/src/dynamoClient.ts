@@ -19,7 +19,7 @@ export class GlobetrotDynamoClient {
 
     async getRace(raceId : string) {
         console.log(raceId);
-        const getRaceResult = await this.get<Race>({'raceID': raceId});
+        const getRaceResult = await this.get({'RaceID': raceId});
         return getRaceResult;
     }
 
@@ -76,13 +76,19 @@ export class GlobetrotDynamoClient {
         return true;
     }
 
-    async get<T>(key: DynamoDB.DocumentClient.Key) {
+    async get(key: DynamoDB.DocumentClient.Key) {
         if (key && tableName) {
             const data = await this.client.get({
                 TableName : tableName,
                 Key: key
             }).promise()
-            return !!data.Item ? DynamoDB.Converter.unmarshall(data.Item) as T : undefined;
+
+            return {id: data.Item?.id,
+                location: data.Item?.location,
+                price_point: data.Item?.price_point,
+                tasks: data.Item?.tasks,
+                players: data.Item?.players
+            }
         } else {
             return undefined;
         }

@@ -24,6 +24,8 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 import { TaskInput } from '../components/TaskInput';
 import { useCreateRaceMutation } from '../services/api';
 import { Coordinates } from '../types/dto';
+import { useRaceContext } from '../services/RaceProvider';
+import { useNavigate } from 'react-router-dom';
 
 interface Payload {
     location: Coordinates;
@@ -39,11 +41,20 @@ enum LocationStatus {
 };
 
 export const Create = () => {
+    const navigate = useNavigate();
+    const { setCurrentRace } = useRaceContext();
     const [askedForLocation, setAskedForLocation] = useState(false);
     const [isLargerThan500] = useMediaQuery('(min-width: 768px)');
     const [locationLoading, setLocationLoading] = useState<LocationStatus>(LocationStatus.uninitialized);
     const [geoLocation, setGeoLocation] = useState<Coordinates>();
-    const [createRace, { data, error, isLoading }] = useCreateRaceMutation();
+    const [createRace, { data, error, isLoading, isSuccess }] = useCreateRaceMutation();
+    
+    useEffect(() => {
+        if (data && isSuccess && !isLoading) {
+            setCurrentRace(data);
+            navigate(`/race/${data.id}`);
+        }
+    }, [data]);
 
     useEffect(() => {
         if (askedForLocation && navigator.geolocation) {
@@ -106,7 +117,7 @@ export const Create = () => {
                                 <VStack w='100%' spacing={4}>
                                     <Stack w={'100%'} direction={'row'}>
                                         <FormControl isRequired>
-                                            <Field as={Input} name={'location'} placeHolder={'Enter starting point'} isDisabled={locationLoading === LocationStatus.success} value={locationLoading === LocationStatus.success ? 'Using Current Location' : props.values.location} />
+                                            <Field as={Input} name={'location'} placeholder={'Enter starting point'} isDisabled={locationLoading === LocationStatus.success} value={locationLoading === LocationStatus.success ? 'Using Current Location' : props.values.location} />
                                         </FormControl>
                                         {!isLargerThan500 ? <IconButton
                                             isLoading={locationLoading === LocationStatus.loading}

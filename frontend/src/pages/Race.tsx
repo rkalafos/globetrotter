@@ -4,6 +4,10 @@ import { Card } from "../components/Card";
 import { useEffect, useState } from "react";
 import { TaskCard } from "../components/TaskCard";
 import { FaUser } from 'react-icons/fa';
+import { useRaceContext } from '../services/RaceProvider';
+import { useGetRaceQuery } from '../services/api';
+import { useParams } from 'react-router-dom';
+import { skipToken } from '@reduxjs/toolkit/dist/query/react';
 type Race = import('../types/dto').Race;
 
 const test_race: Race = {
@@ -53,40 +57,81 @@ const test_race: Race = {
             id: "2",
             name: "Ye West"
         },
+        {
+            id: "0",
+            name: "Cooche Man"
+        },
+        {
+            id: "1",
+            name: "Juan Sebastian"
+        },
+        {
+            id: "2",
+            name: "Mama Cita"
+        },
     ]
 }
 
 
 export const Race = () => {
     // Set the race
-    const [race, setRace] = useState<Race | undefined>();
+    const { id } = useParams();
+    const { currentRace: race, setCurrentRace: setRace } = useRaceContext();
+    const { data, isLoading, error } = useGetRaceQuery(id && !race ? id : skipToken);
     // TODO: Query the actual race with the id from the url, and set the race to the object
     useEffect(() => {
-        setRace(test_race)
-    }, []);
+        if (!race && data) {
+            setRace(data);
+        }
+    }, [data]);
 
     const raceCards = () => {
         return race?.tasks?.map(task => <TaskCard task={task} />);
     };
 
     const peopleGridItems = () => {
-        return race?.players?.map(player => <GridItem w='100%' h='10' ><Flex><FaUser />{player.name}</Flex></GridItem>)
+        return race?.players?.map(player => <GridItem h='10' ><Flex><FaUser style={{
+            marginTop: '5px',
+            marginRight: '5px',
+        }} />{player.name}</Flex></GridItem>)
     }
 
     const dashboard = () => {
         return (
-            <Card w={'full'}>
-                <Grid templateRows='repeat(2, 1fr)' gap={5}>
-                    <GridItem>
+// <<<<<<< Updated upstream
+//             <Card bg="#ffffffe8" w={'full'}>
+//                 <VStack w={'full'}>
+//                     <Stack direction={'row'}>
+//                         <Heading>
+//                             {race?.id}
+//                         </Heading>
+//                     </Stack>
+//                     <Stack direction={'row'}>
+//                         <Text>
+//                             <b>Location: </b>{race?.location}
+//                         </Text>
+//                     </Stack>
+//                     <Stack direction={'row'}>
+//                         <Text>
+//                             <b>Price Point: </b>{Array((race?.price_point ?? 0) + 1).fill('$').join('')}
+//                         </Text>
+//                     </Stack>
+//                     <Stack direction={'row'} pt='20px' pb='10px'>
+//                         <VStack>
+//                             <Grid templateColumns='repeat(3, 1fr)' gap={5}>
+//                                 {peopleGridItems()}
+//                             </Grid>
+// =======
+            <Card bg="#ffffffe8" w={'full'}>
                         <VStack w={'full'}>
                             <Stack direction={'row'}>
                                 <Heading>
-                                    {race?.id}
+                                    Your Amazing Race
                                 </Heading>
                             </Stack>
                             <Stack direction={'row'}>
                                 <Text>
-                                    <b>Location: </b> {race?.location}
+                                    <b>Location: </b> {typeof race?.location === 'string' ? race?.location : `${race?.location.lat} ${race?.location.lng}`}
                                 </Text>
                             </Stack>
                             <Stack direction={'row'}>
@@ -94,15 +139,14 @@ export const Race = () => {
                                     <b>Price Point: </b> {Array((race?.price_point ?? 0) + 1).fill('$').join('')}
                                 </Text>
                             </Stack>
+                            <Stack direction={'row'} pt='20px' pb='10px'>
+                                 <VStack>
+                                     <Grid templateColumns='repeat(3, 1fr)' gap={5}>
+                                         {peopleGridItems()}
+                                    </Grid>
+                                 </VStack>
+                            </Stack>
                         </VStack>
-                    </GridItem>
-                    <GridItem>
-                        <Grid templateColumns='repeat(5, 1fr)' gap={6}>
-                            {peopleGridItems()}
-                        </Grid>
-                    </GridItem>
-                </Grid>
-
             </Card>
         )
     }
@@ -115,7 +159,7 @@ export const Race = () => {
 
     return (
         <DefaultLayout>
-            <VStack pl={'30px'} pr={'30px'} pb={'30px'}>
+            <VStack ml={'30px'} mr={'30px'} pb={'30px'}>
                 {race && dashboard()}
                 <Heading color={"white"}>YOUR RACE TASKS</Heading>
                 {race && raceCards()}
