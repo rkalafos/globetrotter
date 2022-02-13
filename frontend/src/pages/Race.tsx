@@ -55,15 +55,15 @@ const test_race: Race = {
         },
         {
             id: "0",
-            name: "Britney Spears"
+            name: "Cooche Man"
         },
         {
             id: "1",
-            name: "Martha Stewart"
+            name: "Juan Sebastian"
         },
         {
             id: "2",
-            name: "Ye West"
+            name: "Mama Cita"
         },
     ]
 }
@@ -90,7 +90,7 @@ export const Race = () => {
 
     const dashboard = () => {
         return (
-            <Card w={'full'}>
+            <Card bg="#ffffffe8" w={'full'}>
                 <VStack w={'full'}>
                     <Stack direction={'row'}>
                         <Heading>
@@ -107,9 +107,9 @@ export const Race = () => {
                             <b>Price Point: </b>{Array((race?.price_point ?? 0) + 1).fill('$').join('')}
                         </Text>
                     </Stack>
-                    <Stack direction={'row'} pt='20px'>
+                    <Stack direction={'row'} pt='20px' pb='10px'>
                         <VStack>
-                            <Grid templateColumns='repeat(3, 1fr)' gap={6}>
+                            <Grid templateColumns='repeat(3, 1fr)' gap={5}>
                                 {peopleGridItems()}
                             </Grid>
                         </VStack>
@@ -127,7 +127,7 @@ export const Race = () => {
 
     return (
         <DefaultLayout>
-            <VStack pl={'30px'} pr={'30px'} pb={'30px'}>
+            <VStack ml={'30px'} mr={'30px'} pb={'30px'}>
                 {race && dashboard()}
                 <Heading color={"white"}>YOUR RACE TASKS</Heading>
                 {race && raceCards()}
