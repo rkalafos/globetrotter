@@ -1,7 +1,7 @@
 // All the information about an individual Race
 export interface Race {
 	id: string;
-	location: string;
+	location: Coordinates;
 	price_point: number;
 	tasks: Task[];
 	players: Player[];

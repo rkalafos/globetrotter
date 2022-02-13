@@ -19,7 +19,7 @@ export const globetrotterApi = createApi({
               body: player
             })
       }),
-      createRace: builder.mutation<undefined, CreateRacePayload>({
+      createRace: builder.mutation<Race, CreateRacePayload>({
           query: (race) => ({
               url: '/race',
               method: 'POST',
