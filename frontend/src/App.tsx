@@ -1,7 +1,6 @@
 import * as React from "react"
 import {
-  ChakraProvider,
-  theme,
+  ChakraProvider, extendTheme,
 } from "@chakra-ui/react"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { Home } from "./pages/Home"
@@ -12,7 +11,18 @@ import { Race } from "./pages/Race"
 import { Provider } from "react-redux";
 import { store } from "./services/store";
 import { FindRace } from "./pages/FindRace";
-import { RaceProvider } from "./services/RaceProvider"
+import { RaceProvider } from "./services/RaceProvider";
+
+const theme = extendTheme({
+  styles: {
+    global: {
+      body: {
+        overflow: "hidden",
+        webkitOverflowScrolling: "touch",
+      }
+    }
+  }
+})
 
 export const App = () => (
   <RaceProvider>

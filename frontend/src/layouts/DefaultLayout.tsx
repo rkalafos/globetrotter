@@ -7,7 +7,7 @@ export const DefaultLayout: React.FC = ({ children }) => {
         <VStack
             align={'center'}
             w={"full"}
-            h={"100vh"}
+            h={"100%"}
             backgroundImage={
                 "url(/images/background.jpg)"
             }
@@ -15,6 +15,12 @@ export const DefaultLayout: React.FC = ({ children }) => {
             backgroundPosition={"center center"}
             position={"fixed"}
             overflowY={"auto"}
+            sx={{
+                "::-webkit-scrollbar": {
+                    display: "none"
+                },
+                webkitOverflowScrolling: "touch"
+            }}
             pb={'1$'}
         >
             <NavBar />
