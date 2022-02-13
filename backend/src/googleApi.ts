@@ -1,28 +1,13 @@
-import {AddressType, Client, GeocodeResult, LatLngLiteral} from "@googlemaps/google-maps-services-js";
+import {
+    Client,
+    LatLngLiteral,
+    TextSearchResponse
+} from "@googlemaps/google-maps-services-js";
 import {Task} from "./types";
 
-const api_key = "AIzaSyBTKrskTOBf57xrGzHFc8uXAQEA_7q5U3w";
+const api_key:string = process.env.GOOGLE_MAPS_API_KEY as string;
 
 const client = new Client({});
-
-interface poi {
-    // price_level: number;
-    user_rating?: number;
-    name?: string;
-    coords?: coords;
-    user_ratings_total?: number;
-    types?: AddressType[];
-    url?: string;
-    vicinity?: string;
-    price_point?: number;
-    formatted_address?: string;
-}
-
-interface coords {
-    lat?: number;
-    lng?: number;
-}
-
 
 export async function getGeocode(address: string) : Promise<LatLngLiteral>{
     try{
@@ -41,19 +26,31 @@ export async function getGeocode(address: string) : Promise<LatLngLiteral>{
     }
 }
 
-
-export async function generateTask(keyword: string, price_level: number, address: string) :Promise<Task|undefined>{
+async function getPlaces(keyword: string, price_level: number, address:string) :Promise<TextSearchResponse>{
     const myGeocode = await getGeocode(address)
-    const myPlaces = await client.textSearch({
+    return client.textSearch({
         params:{
             location: {latitude: myGeocode['lat'], longitude:myGeocode['lng']},
             query: keyword,
             maxprice: price_level,
             minprice: 0,
-            radius: 20000,
+            radius: 40000,
             key: api_key
         }
-    });
+})}
+
+export async function generateTask(keyword: string, price_level: number, address: string) :Promise<Task|undefined>{
+    let myPlaces;
+    if (keyword.toLowerCase()=="random" ||keyword.toLowerCase() == ""){
+        const defaultPlaces = ['art_gallery', 'aquarium', 'mosque', 'bowling alley', 'casino', 'gym', 'zoo', 'university', 'store','clothing store', 'restaurant', 'park', 'museum', 'movie_theatre','night_club', 'bar', 'ice skating'];
+        const randomElement:string = defaultPlaces[Math.floor(Math.random() * defaultPlaces.length)];
+        console.log("Generating random element", randomElement);
+        myPlaces = await getPlaces(randomElement, price_level, address);
+        console.log(myPlaces.data.results)
+
+    } else {
+        myPlaces = await getPlaces(keyword, price_level, address);
+    }
     let tasks: Task[] = myPlaces.data.results.filter(r=>(!!r.name && !!r.rating)).map(r=> {
         return {            
             description: "",
@@ -66,23 +63,28 @@ export async function generateTask(keyword: string, price_level: number, address
         }
 
     })
-    //let pois :poi[] = myPlaces.data.results.map(r => {
-    //    return {
-    //        name: r.name,
-    //        types: r.types,
-    //        rating: r.rating,
-    //        price_point: r.price_level,
-    //        vicinity: r.vicinity,
-    //        user_rating_total: r.user_ratings_total,
-    //        coords: {'lat':r.geometry?.location.lat, 'lng': r.geometry?.location.lng},
-    //        url: r.url,
-    //        formatted_address: r.formatted_address
-    //    }
-    //}).filter(r=>(!!r.coords && !!r.name && !!r.rating && !!r.vicinity && !!r.formatted_address));
 
     if (tasks.length) {
-        return tasks[0];
+        return tasks[Math.floor(Math.random() * tasks.length)];
     } else {
-        throw new Error("No task found for keyword");
+        console.log("No tasks trying with price point")
+        myPlaces = await getPlaces(keyword, 4, address);
+        let tasks: Task[] = myPlaces.data.results.filter(r=>(!!r.name && !!r.rating)).map(r=> {
+            return {
+                description: "",
+                pointOfInterest: {
+                    name: r.name,
+                    vicinity: r.vicinity,
+                    formatted_address: r.formatted_address,
+                    types: r.types,
+                }
+            }
+        })
+        if (tasks.length) {
+            return tasks[Math.floor(Math.random() * tasks.length)];
+        } else {
+            console.log('No GOOGLE API Values')
+            throw "No GoogleAPI values for current keyword";
+        }
     }
 }
