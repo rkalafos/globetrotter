@@ -2,7 +2,7 @@ on: [push]
 name: Production Deploy
 defaults:
   run:
-    working-directory: ./backend
+    working-directory: ./frontend
 
 jobs:
   deploy:
