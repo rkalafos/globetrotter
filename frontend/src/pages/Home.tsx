@@ -27,17 +27,17 @@ export const Home = () => {
                             Create an Adventure
                         </Button>
                     </Stack>
-                    <Stack direction={'row'} p={2}>
-                        <Button
-                            onClick={() => navigate('join')}
-                            bg={'teal.700'}
-                            rounded={'full'}
-                            color={'white'}
-                            _hover={{ bg: 'teal.500' }}
-                        >
-                            Join an Adventure
-                        </Button>
-                    </Stack>
+                    {/*<Stack direction={'row'} p={2}>*/}
+                    {/*    <Button*/}
+                    {/*        onClick={() => navigate('join')}*/}
+                    {/*        bg={'teal.700'}*/}
+                    {/*        rounded={'full'}*/}
+                    {/*        color={'white'}*/}
+                    {/*        _hover={{ bg: 'teal.500' }}*/}
+                    {/*    >*/}
+                    {/*        Join an Adventure*/}
+                    {/*    </Button>*/}
+                    {/*</Stack>*/}
                     <Stack direction={'row'} p={2}>
                         <Button
                             onClick={() => navigate('find')}

@@ -27,21 +27,6 @@ export const Join = () => {
         }
     }, [result])
 
-    // const onJoinRace = () => {
-
-
-    //     makeRequest().then(response => {
-    //         if (response.status_code === 200) {
-    //             // redirect to the race page
-    //         } else {
-    //             // send to home
-    //         }
-    //     }
-
-
-    //     )
-    // }
-
     return (
         <DefaultLayout>
             <Card>
