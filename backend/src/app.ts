@@ -6,8 +6,10 @@ import { BAD_REQUEST, OK } from './StatusCode';
 
 const app = express();
 const port = 8081; // default port to listen
-const serverless = require('serverless-http')
+const serverless = require('serverless-http');
+var cors = require('cors');
 app.use(express.json());
+app.use(cors());
 
 const registerRoutes = () => {
     // define a route handler for the default home page

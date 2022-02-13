@@ -10,18 +10,18 @@ export const globetrotterApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: apiUrl }),
   endpoints: (builder) => ({
       getRace: builder.query<Race, string>({
-          query: (id) => `/races/${id}`
+          query: (id) => `/race/${id}`
       }),
       joinRace: builder.mutation<JoinResponse, JoinFormValues>({
           query: (player) => ({ 
-              url: `/races`,
+              url: `/race`,
               method: 'PUT',
               body: player
             })
       }),
       createRace: builder.mutation<undefined, CreateRacePayload>({
           query: (race) => ({
-              url: '/races',
+              url: '/race',
               method: 'POST',
               body: race
           })
