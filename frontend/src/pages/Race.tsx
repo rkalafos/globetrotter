@@ -9,7 +9,9 @@ import { useGetRaceQuery } from '../services/api';
 import { useParams } from 'react-router-dom';
 import { skipToken } from '@reduxjs/toolkit/dist/query/react';
 import constants from "../constants";
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 type Race = import('../types/dto').Race;
+
 
 const test_race: Race = {
     id: "HACKBEANPOT-2022",
@@ -126,8 +128,6 @@ export const Race = () => {
 
     const dashboard = () => {
         const copyLink = () => {
-            const link = constants.SITE_DOMAIN + '/race/' + race?.id
-            navigator.clipboard.writeText(link)
 
             setCopiedAlertVisible(true)
 
@@ -144,7 +144,12 @@ export const Race = () => {
                     <VStack w={'full'}>
                         <Stack direction={'row'}>
                             <Heading>
-                                <Flex>Your Amazing Race <Icon as={FaLink} _hover={{ cursor: 'pointer' }} onClick={() => copyLink()} w={6} h={6} style={{ marginTop: '12px', marginLeft: '12px' }} /></Flex>
+                                <Flex>Your Amazing Race
+                                    <CopyToClipboard text={constants.SITE_DOMAIN + '/race/' + race?.id}
+                                                     onCopy={() => copyLink()}>
+                                        <Icon as={FaLink} _hover={{ cursor: 'pointer' }} onClick={() => copyLink()} w={6} h={6} style={{ marginTop: '12px', marginLeft: '12px' }} />
+                                    </CopyToClipboard>
+                                </Flex>
                             </Heading>
                         </Stack>
                         <Stack direction={'row'}>
