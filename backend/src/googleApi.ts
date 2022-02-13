@@ -71,8 +71,13 @@ export async function generateTask(keyword: string, price_level: number, address
         if (tasks.length) {
             return tasks[Math.floor(Math.random() * tasks.length)];
         } else {
-            console.log('No GOOGLE API Values')
-            throw "No GoogleAPI values for current keyword";
+            tasks = await getPlaces('activity', 4, address);
+            if (tasks.length) {
+                return tasks[Math.floor(Math.random() * tasks.length)];
+            } else {
+                console.log('No GOOGLE API Values')
+                throw "No GoogleAPI values for current keyword";
+            }
         }
     }
 }
