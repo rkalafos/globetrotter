@@ -80,7 +80,7 @@ export const Create = () => {
     const initalValues: Payload = {
         location: '',
         labels: [],
-        pricePoint: 0,
+        pricePoint: 4,
     };
 
 
@@ -96,7 +96,7 @@ export const Create = () => {
                             setSubmitting(true);
                             createRace({
                                 location: geoLocation || values.location,
-                                labels: values.labels,
+                                labels: values.labels.map(label => label === '' ? 'random': label),
                                 price_point: values.pricePoint,
                             })
                         }}

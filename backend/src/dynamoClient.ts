@@ -1,9 +1,8 @@
 // ES6+ example
 import { DynamoDB } from 'aws-sdk'
 import { Race } from "./types";
-import { examplePlayers, exampleTasks } from './examples';
 
-const tableName = process.env.TABLE_NAME
+const tableName = process.env.TABLE_NAME || 'Race';
 
 enum TABLES {
     RACE = "Race",
@@ -18,24 +17,27 @@ export class GlobetrotDynamoClient {
         this.client =  new DynamoDB.DocumentClient()
     }
 
-    getRace(raceId : string) {
-        console.log(raceId)
-        const getRaceResult = this.get({'raceID': raceId})
+    async getRace(raceId : string) {
+        console.log(raceId);
+        const getRaceResult = await this.get<Race>({'raceID': raceId});
         return getRaceResult;
     }
 
     async saveRace(race : Race) {
-        console.log(race);
-        const saveResult = await this.put(race)
+        const saveResult = await this.put({
+            RaceID: race.id,
+            ...race
+
+        })
         return saveResult
     }
 
-    addPlayer(raceId : string, playerName : string) : boolean {
+    async addPlayer(raceId : string, playerName : string) : Promise<boolean> {
         console.log(raceId, playerName);
         const key = {"id": raceId};
         const updateExpression = "set players = list_append(players, :new_player";
         const expressionAttributeValues = {":new_player": [playerName]}
-        const addPlayerResult = this.update(key, updateExpression, expressionAttributeValues);
+        const addPlayerResult = await this.update(key, updateExpression, expressionAttributeValues);
         return true;
     }
 
@@ -47,7 +49,8 @@ export class GlobetrotDynamoClient {
                     Item: item,
                 }).promise()
                 return true;
-            } catch {
+            } catch (e) {
+                console.log(e);
                 return false;
             }
         }

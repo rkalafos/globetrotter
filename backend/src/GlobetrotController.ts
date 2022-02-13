@@ -2,16 +2,15 @@ import { fetchRace, saveAddPlayer } from "./GlobetrotService"
 import { saveRace } from "./GlobetrotService";
 import { v4 as uuidv4 } from 'uuid';
 import { Player, Race, Task } from "./types";
-import { exampleTasks } from "./examples";
 import {generateTask} from "./googleApi";
 
-export const getRace = (raceId : string) : Race | undefined => {
-    return fetchRace(raceId);
+export const getRace = async (raceId : string) : Promise<Race | undefined> => {
+    return await fetchRace(raceId);
 }
 
 export const createRace = async (location :string, price_point: number, labels: string[]) => {
 
-    const tasks =await Promise.all(labels.map(label => {
+    const tasks = await Promise.all(labels.map(label => {
         return generateTask(label, price_point, location);
     }))
 
@@ -32,8 +31,14 @@ export const createRace = async (location :string, price_point: number, labels: 
         location: location
     }
 
-    const result = saveRace(race);
-    return result ? race.id : undefined;
+    const result = await saveRace(race);
+
+    if (result) {
+        return race;
+    }
+
+    return undefined;
+
     
 }
 
